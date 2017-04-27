@@ -29,7 +29,8 @@ public class Movie {
     private String releaseDate;
 
     @SerializedName("genre_ids")
-    @Transient
+    @ElementCollection
+    @CollectionTable(name = "genre_ids")
     private List<Long> genreIds;
 
     @SerializedName("id")

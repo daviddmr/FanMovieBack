@@ -1,10 +1,7 @@
 package com.david.controller;
 
-import com.david.model.GenreMovie;
 import com.david.model.Movie;
-import com.david.repository.GenreMovieRepository;
 import com.david.repository.MovieRepository;
-import com.david.utils.GenreNames;
 import com.david.utils.MovieJsons;
 import com.david.utils.ResultJsonAPI;
 import com.google.gson.Gson;
@@ -26,9 +23,6 @@ public class MovieController {
 
     @Autowired
     MovieRepository repository;
-
-    @Autowired
-    GenreMovieRepository genreMovieRepository;
 
     @RequestMapping
     public String getMovie(@RequestParam("id") Long id) {
@@ -53,12 +47,6 @@ public class MovieController {
 
             for (Movie movie : movieJsonAPI.getResults()) {
                 repository.saveAndFlush(movie);
-
-                for (long genreId : movie.getGenreIds()) {
-                    String genreName = new GenreNames().getGenreNameById(genreId);
-                    genreMovieRepository.saveAndFlush(new GenreMovie(movie.getId(), genreName));
-                }
-
             }
         }
 
