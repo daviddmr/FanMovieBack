@@ -1,6 +1,6 @@
 package com.david.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,99 +14,152 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "_id")
-    @SerializedName("_id")
-    private Long id;
+    @JsonProperty
+    private Long _id;
 
-    @SerializedName("poster_path")
-    private String posterPath;
+    @JsonProperty
+    private String poster_path;
 
     @Lob
-    @Column
+    @JsonProperty
     private String overview;
 
-    @SerializedName("release_date")
-    private String releaseDate;
+    @JsonProperty
+    private String release_date;
 
-    @SerializedName("genre_ids")
     @ElementCollection
     @CollectionTable(name = "genre_ids")
-    private List<Long> genreIds;
+    @JsonProperty
+    private List<Long> genre_ids;
 
-    @SerializedName("id")
+    @JsonProperty("id")
     @Column(unique = true)
-    private long originalId;
+    private long id;
 
-    @SerializedName("original_title")
-    private String originalTitle;
+    @JsonProperty
+    private String original_title;
 
-    @SerializedName("original_language")
-    private String originalLanguage;
+    @JsonProperty
+    private String original_language;
 
+    @JsonProperty
     private String title;
-    @SerializedName("backdrop_path")
-    private String backdropPath;
 
+    @JsonProperty
+    private String backdrop_path;
+
+    @JsonProperty
     private float popularity;
 
-    @SerializedName("vote_count")
-    private long voteCount;
+    @JsonProperty
+    private long vote_count;
 
-    @SerializedName("vote_average")
-    private float voteAverage;
+    @JsonProperty
+    private float vote_average;
 
     protected Movie () {}
 
-    public Long getId() {
-        return id;
+    public Long get_id() {
+        return _id;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
     public String getOverview() {
         return overview;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public List<Long> getGenreIds() {
-        return genreIds;
+    public String getRelease_date() {
+        return release_date;
     }
 
-    public long getOriginalId() {
-        return originalId;
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
+    public List<Long> getGenre_ids() {
+        return genre_ids;
     }
 
-    public String getOriginalLanguage() {
-        return originalLanguage;
+    public void setGenre_ids(List<Long> genre_ids) {
+        this.genre_ids = genre_ids;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getOriginal_title() {
+        return original_title;
+    }
+
+    public void setOriginal_title(String original_title) {
+        this.original_title = original_title;
+    }
+
+    public String getOriginal_language() {
+        return original_language;
+    }
+
+    public void setOriginal_language(String original_language) {
+        this.original_language = original_language;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
     }
 
     public float getPopularity() {
         return popularity;
     }
 
-    public long getVoteCount() {
-        return voteCount;
+    public void setPopularity(float popularity) {
+        this.popularity = popularity;
     }
 
-    public float getVoteAverage() {
-        return voteAverage;
+    public long getVote_count() {
+        return vote_count;
     }
 
+    public void setVote_count(long vote_count) {
+        this.vote_count = vote_count;
+    }
+
+    public float getVote_average() {
+        return vote_average;
+    }
+
+    public void setVote_average(float vote_average) {
+        this.vote_average = vote_average;
+    }
 }
