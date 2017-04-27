@@ -6,9 +6,7 @@ import com.david.utils.MovieJsons;
 import com.david.utils.ResultJsonAPI;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +20,35 @@ import java.util.List;
 public class MovieController {
 
     @Autowired
-    MovieRepository repository;
+    private MovieRepository repository;
 
-    @RequestMapping
-    public String getMovie(@RequestParam("id") Long id) {
-        String result;
-        Movie movie = repository.findOne(id);
-        result = new Gson().toJson(movie);
+    @RequestMapping(produces = "application/json")
+    public Movie getMovie(@RequestParam("id") Long id) {
+        return repository.findOne(id);
+    }
 
-        return result;
+    @RequestMapping(value = "/list", produces = "application/json")
+    public List<Movie> getMovies() {
+        return repository.findAll();
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    public Movie insertMovie(@RequestBody Movie movie) {
+        repository.saveAndFlush(movie);
+        return movie;
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT, produces = "application/json")
+    public Movie updateMovie(@RequestBody Movie movie) {
+        repository.save(movie);
+        return movie;
+    }
+
+    @RequestMapping("/remove")
+    public String deleteMovie(@RequestParam("id") Long id) {
+        repository.delete(id);
+
+        return "Success";
     }
 
     @RequestMapping(value = "/fill")
@@ -50,7 +68,7 @@ public class MovieController {
             }
         }
 
-        return "Done!";
+        return "Success!";
     }
 
 }
