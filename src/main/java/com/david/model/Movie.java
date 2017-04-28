@@ -1,6 +1,6 @@
 package com.david.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,52 +10,44 @@ import java.util.List;
  */
 
 @Entity
+@SuppressWarnings("unused")
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty
     private Long _id;
 
-    @JsonProperty
     private String poster_path;
 
     @Lob
-    @JsonProperty
     private String overview;
 
-    @JsonProperty
     private String release_date;
 
     @ElementCollection
     @CollectionTable(name = "genre_ids")
-    @JsonProperty
     private List<Long> genre_ids;
 
-    @JsonProperty("id")
     @Column(unique = true)
     private long id;
 
-    @JsonProperty
     private String original_title;
 
-    @JsonProperty
     private String original_language;
 
-    @JsonProperty
     private String title;
 
-    @JsonProperty
     private String backdrop_path;
 
-    @JsonProperty
     private float popularity;
 
-    @JsonProperty
     private long vote_count;
 
-    @JsonProperty
     private float vote_average;
+
+    @ManyToMany(mappedBy = "movies")
+    @JsonIgnore
+    private List<User> users;
 
     protected Movie () {}
 
@@ -161,5 +153,13 @@ public class Movie {
 
     public void setVote_average(float vote_average) {
         this.vote_average = vote_average;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
