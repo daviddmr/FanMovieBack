@@ -1,9 +1,6 @@
 package com.david.model;
 
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,11 +22,9 @@ public class User {
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_favorite_movie", joinColumns =
-    @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns =
-    @JoinColumn(name = "movie_id", referencedColumnName = "_id"))
-    private List<Movie> movies;
+    @ElementCollection
+    @CollectionTable(name = "user_favorite_movie")
+    private Set<Long> favorites_movies;
 
     public User(String name, String user_name, String password) {
         this.name = name;
@@ -71,11 +66,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Movie> getMovies() {
-        return movies;
+    public Set<Long> getFavorites_movies() {
+        return favorites_movies;
     }
 
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public void setFavorites_movies(Set<Long> favorites_movies) {
+        this.favorites_movies = favorites_movies;
     }
 }

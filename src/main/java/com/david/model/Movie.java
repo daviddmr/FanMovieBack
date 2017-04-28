@@ -45,10 +45,6 @@ public class Movie {
 
     private float vote_average;
 
-    @ManyToMany(mappedBy = "movies")
-    @JsonIgnore
-    private List<User> users;
-
     protected Movie () {}
 
     public Long get_id() {
@@ -155,11 +151,4 @@ public class Movie {
         this.vote_average = vote_average;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }
