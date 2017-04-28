@@ -1,10 +1,12 @@
 package com.david.controller;
 
+import com.david.model.Movie;
 import com.david.model.User;
 import com.david.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by david on 28/04/2017.
@@ -15,28 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
-    @RequestMapping(value = "/get")
-    public User getUser(Long id) {
-        User user = repository.getOne(id);
-        System.out.println(user);
+    @RequestMapping(produces = "application/json")
+    public User getUser(@RequestParam("id") Long id) {
+        return repository.findOne(id);
+    }
+
+    @RequestMapping(value = "/list", produces = "application/json")
+    public List<User> getUsers() {
+        return repository.findAll();
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    public User insertUser(@RequestBody User user) {
+        repository.saveAndFlush(user);
         return user;
     }
 
-    @RequestMapping(value = "/add")
-    public String insertUser(User user) {
-        repository.save(new User("David"));
-        repository.save(new User("David2"));
-        repository.save(new User("David3"));
-        repository.save(new User("David4"));
-        repository.save(new User("David5"));
-        return "Done";
+    @RequestMapping(value = "/addFavorite", method = RequestMethod.POST, produces = "application/json")
+    public User addFavorite(@RequestParam("id") Long id, @RequestBody List<Movie> movies) {
+        User user = repository.findOne(id);
+        user.setMovies(movies);
+        return repository.saveAndFlush(user);
     }
 
-    @RequestMapping(value = "/teste")
-    public String teste() {
-        return "Done!";
+    @RequestMapping("/remove")
+    public String deleteUser(@RequestParam("id") Long id) {
+        repository.delete(id);
+
+        return "Success";
     }
 
 }
