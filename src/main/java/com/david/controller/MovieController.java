@@ -46,6 +46,11 @@ public class MovieController {
         return "Success";
     }
 
+    @RequestMapping(value = "/top10", produces = "application/json")
+    public List<Movie> topTen() {
+        return repository.findAll().subList(0,10);
+    }
+
     @RequestMapping(value = "/fill")
     public String fillMovieTable() {
 
