@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by david on 26/04/2017.
@@ -35,12 +36,6 @@ public class MovieController {
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
     public Movie insertMovie(@RequestBody Movie movie) {
         repository.saveAndFlush(movie);
-        return movie;
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT, produces = "application/json")
-    public Movie updateMovie(@RequestBody Movie movie) {
-        repository.save(movie);
         return movie;
     }
 
