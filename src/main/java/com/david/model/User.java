@@ -26,6 +26,8 @@ public class User {
     @CollectionTable(name = "user_favorite_movie")
     private Set<Long> favorites_movies;
 
+    private boolean administrator;
+
     public User(String name, String user_name, String password) {
         this.name = name;
         this.user_name = user_name;
@@ -72,5 +74,13 @@ public class User {
 
     public void setFavorites_movies(Set<Long> favorites_movies) {
         this.favorites_movies = favorites_movies;
+    }
+
+    public boolean isAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(boolean administrator) {
+        this.administrator = administrator;
     }
 }
