@@ -1,6 +1,12 @@
 package com.david.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "[user]")
 @SuppressWarnings("unused")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +33,9 @@ public class User {
     private Set<Long> favorites_movies;
 
     private boolean administrator;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
 
     public User(String name, String username, String password) {
         this.name = name;
@@ -52,6 +61,7 @@ public class User {
         this.name = name;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -60,6 +70,8 @@ public class User {
         this.username = userName;
     }
 
+    @JsonIgnore
+    @Override
     public String getPassword() {
         return password;
     }
@@ -83,4 +95,40 @@ public class User {
     public void setAdministrator(boolean administrator) {
         this.administrator = administrator;
     }
+
+    @JsonIgnore
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
