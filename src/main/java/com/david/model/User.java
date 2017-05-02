@@ -18,7 +18,7 @@ public class User {
 
     private String name;
 
-    private String user_name;
+    private String username;
 
     private String password;
 
@@ -28,9 +28,9 @@ public class User {
 
     private boolean administrator;
 
-    public User(String name, String user_name, String password) {
+    public User(String name, String username, String password) {
         this.name = name;
-        this.user_name = user_name;
+        this.username = username;
         this.password = password;
     }
 
@@ -52,12 +52,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
