@@ -4,6 +4,7 @@ import com.david.model.Movie;
 import com.david.model.Role;
 import com.david.model.User;
 import com.david.repository.MovieRepository;
+import com.david.repository.RoleRepository;
 import com.david.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class UserController {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @RequestMapping(produces = "application/json")
     public User getUser(@RequestParam("id") Long id) {
         return repository.findOne(id);
@@ -36,16 +40,23 @@ public class UserController {
         return repository.findAll();
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+    public User loginUser(@RequestBody User user) {
+        return repository.findByUsername(user.getUsername());
+    }
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json")
-    public User insertUser(@RequestBody User user) {
+    public User signupUser(@RequestBody User user) {
 
         List<Role> roles = new ArrayList<>();
+        Role role = null;
         if(user.isAdministrator()) {
-            roles.add(new Role("ROLE_ADMIN"));
+            role = roleRepository.findByName("ROLE_ADMIN");
         } else {
-            roles.add(new Role("ROLE_USER"));
+            role = roleRepository.findByName("ROLE_USER");
         }
 
+        roles.add(role);
         user.setRoles(roles);
 
         User userResponse = repository.saveAndFlush(user);
