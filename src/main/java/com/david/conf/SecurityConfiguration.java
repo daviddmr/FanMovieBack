@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -28,9 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/movie/list").permitAll()
+                .antMatchers("/user/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"));
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                .and().csrf().disable();
     }
 
     @Override
