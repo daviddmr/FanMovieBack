@@ -48,7 +48,10 @@ public class UserController {
 
         user.setRoles(roles);
 
-        return repository.saveAndFlush(user);
+        User userResponse = repository.saveAndFlush(user);
+        userResponse.setPassword(null);
+
+        return userResponse;
     }
 
     @RequestMapping("/remove")

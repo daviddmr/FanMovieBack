@@ -71,7 +71,6 @@ public class User implements UserDetails{
         this.username = userName;
     }
 
-    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
