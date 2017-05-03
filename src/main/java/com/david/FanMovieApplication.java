@@ -1,9 +1,9 @@
 package com.david;
 
 import com.david.model.Movie;
-import com.david.model.User;
+import com.david.model.Role;
 import com.david.repository.MovieRepository;
-import com.david.repository.UserRepository;
+import com.david.repository.RoleRepository;
 import com.david.utils.MovieJsons;
 import com.david.utils.ResultJsonAPI;
 import com.google.gson.Gson;
@@ -28,30 +28,30 @@ public class FanMovieApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	UserRepository userRepository;
+	private MovieRepository movieRepository;
 
 	@Autowired
-	MovieRepository movieRepository;
+    private RoleRepository roleRepository;
 
 	@Transactional
 	@Override
 	public void run(String... strings) throws Exception {
-		MovieJsons movieUtils = new MovieJsons();
-		List<String> moviesList = new ArrayList<>();
-		moviesList.add(movieUtils.getMoviesPage1());
+//		MovieJsons movieUtils = new MovieJsons();
+//		List<String> moviesList = new ArrayList<>();
+//		moviesList.add(movieUtils.getMoviesPage3());
 //		moviesList.add(movieUtils.getMoviesPage2());
-
-		for(String movieItem : moviesList) {
-
-			ResultJsonAPI movieJsonAPI = new Gson().fromJson(movieItem, ResultJsonAPI.class);
-
-			for (Movie movie : movieJsonAPI.getResults()) {
-				movieRepository.saveAndFlush(movie);
-			}
-		}
-
-		User user = new User("David", "daviddmr", "pass");
-		User user2 = userRepository.save(user);
-		System.out.println("ID = " + user2.getId());
-	}
+//		moviesList.add(movieUtils.getMoviesPage1());
+//
+//        for(String movieItem : moviesList) {
+//
+//			ResultJsonAPI movieJsonAPI = new Gson().fromJson(movieItem, ResultJsonAPI.class);
+//
+//			for (Movie movie : movieJsonAPI.getResults()) {
+//				movieRepository.saveAndFlush(movie);
+//			}
+//		}
+//
+//        roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
+//        roleRepository.saveAndFlush(new Role("ROLE_USER"));
+    }
 }
