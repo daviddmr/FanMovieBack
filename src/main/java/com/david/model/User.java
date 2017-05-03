@@ -24,6 +24,7 @@ public class User implements UserDetails{
 
     private String name;
 
+    @Column(unique = true)
     private String username;
 
     private String password;
@@ -99,6 +100,10 @@ public class User implements UserDetails{
     @JsonIgnore
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @JsonIgnore
