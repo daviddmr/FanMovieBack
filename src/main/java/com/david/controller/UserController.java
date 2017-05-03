@@ -1,6 +1,7 @@
 package com.david.controller;
 
 import com.david.model.Movie;
+import com.david.model.Role;
 import com.david.model.User;
 import com.david.repository.MovieRepository;
 import com.david.repository.UserRepository;
@@ -35,10 +36,19 @@ public class UserController {
         return repository.findAll();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json")
     public User insertUser(@RequestBody User user) {
-        repository.saveAndFlush(user);
-        return user;
+
+        List<Role> roles = new ArrayList<>();
+        if(user.isAdministrator()) {
+            roles.add(new Role("ROLE_ADMIN"));
+        } else {
+            roles.add(new Role("ROLE_USER"));
+        }
+
+        user.setRoles(roles);
+
+        return repository.saveAndFlush(user);
     }
 
     @RequestMapping("/remove")
