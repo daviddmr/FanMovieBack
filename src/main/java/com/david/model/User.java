@@ -35,7 +35,7 @@ public class User implements UserDetails{
 
     private boolean administrator;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
     public User(String name, String username, String password) {
