@@ -42,7 +42,10 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     public User loginUser(@RequestBody User user) {
-        return repository.findByUsername(user.getUsername());
+        User userResponse = repository.findByUsername(user.getUsername());
+        userResponse.setPassword(null);
+
+        return userResponse;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST, produces = "application/json")
