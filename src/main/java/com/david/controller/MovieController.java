@@ -8,9 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by david on 26/04/2017.
@@ -35,20 +33,33 @@ public class MovieController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
     public Movie insertMovie(@RequestBody Movie movie) {
-        repository.saveAndFlush(movie);
-        return movie;
+        return repository.saveAndFlush(movie);
     }
 
-    @RequestMapping("/remove")
-    public String deleteMovie(@RequestParam("id") Long id) {
+    @RequestMapping(value = "/remove", produces = "application/json")
+    public Movie deleteMovie(@RequestParam("id") Long id) {
+        Movie movie = repository.findOne(id);
         repository.delete(id);
 
-        return "Success";
+        return movie;
     }
 
     @RequestMapping(value = "/top10", produces = "application/json")
     public List<Movie> topTen() {
-        return repository.findAll().subList(0,10);
+        List<Movie> movies =  repository.findAll();
+
+        movies.sort(new Comparator<Movie>() {
+            @Override
+            public int compare(Movie m1, Movie m2) {
+                if (m1.getVote_average() > m2.getVote_average())
+                    return -1;
+                if (m1.getVote_average() < m2.getVote_average())
+                    return 1;
+                return 0;
+            }
+        });
+
+        return movies.subList(0, 10);
     }
 
     @RequestMapping(value = "/fill")
