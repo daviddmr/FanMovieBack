@@ -40,7 +40,7 @@ public class MovieController {
     public Movie deleteMovie(@RequestParam("id") Long id) {
         Movie movie = repository.findOne(id);
         repository.delete(id);
-
+        movie.setGenre_ids(null);
         return movie;
     }
 
