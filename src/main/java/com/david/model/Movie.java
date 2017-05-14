@@ -28,7 +28,6 @@ public class Movie {
     @CollectionTable(name = "genre_ids")
     private List<Long> genre_ids;
 
-    @Column(unique = true)
     private long id;
 
     private String original_title;

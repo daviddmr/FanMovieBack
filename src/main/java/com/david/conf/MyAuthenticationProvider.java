@@ -28,8 +28,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String teste = authentication.getName();
-        User userFromRepository = userRepository.findByUsername(teste);
+        User userFromRepository = userRepository.findByUsername(authentication.getName());
         if(userFromRepository != null){
             if(userFromRepository.getPassword().equals(authentication.getCredentials())){
                 List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
